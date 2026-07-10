@@ -12,6 +12,7 @@ export default function StudentWork() {
     'Card Games',
     'Web Development',
   ];
+
   return (
     <div>
       <h2>Game Developer looking to learn more about Software Development</h2>
