@@ -7,9 +7,10 @@ export default function BugStrictMode() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    setInterval(() => {
-      setCount((c) => c + 1);
+    const interval = setInterval(() => {
+      setCount((previous) => previous + 1);
     }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
