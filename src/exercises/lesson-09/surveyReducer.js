@@ -63,12 +63,36 @@ export function surveyReducer(state, action) {
         ),
       };
 
+    case 'ADD_OPTION_TO_QUESTION':
+      return {
+        ...state,
+        questions: state.questions.map((q) =>
+          q.id === action.payload.id
+            ? { ...q, options: [...q.options, action.payload.optionText] }
+            : q
+        ),
+      };
+
+    case 'UPDATE_OPTION_TEXT':
+      return {
+        ...state,
+        questions: state.questions.map((q) =>
+          q.id === action.payload.id
+            ? {
+                ...q,
+                options: [action.payload.optionText],
+              }
+            : q
+        ),
+      };
+
     case 'SET_EDITING_QUESTION':
+      console.log(action.payload);
       return {
         ...state,
         ui: {
           ...state.ui,
-          editingQuestionId: action.payload.questionId,
+          editingQuestionId: action.payload,
         },
       };
 
@@ -96,14 +120,25 @@ export function surveyReducer(state, action) {
 
     case 'UPDATE_QUESTION_TEXT':
       // TODO: Implement this action
+
       console.log('TODO: Implement UPDATE_QUESTION_TEXT action');
-      return state;
+      return {
+        ...state,
+        questions: state.questions.map((q) =>
+          q.id === action.payload.id
+            ? { ...q, question: action.payload.text }
+            : q
+        ),
+        ui: { ...state.ui, editingQuestionId: null },
+      };
 
     case 'DELETE_QUESTION':
       // TODO: Implement this action
       console.log('TODO: Implement DELETE_QUESTION action');
-      return state;
-
+      return {
+        ...state,
+        questions: state.questions.filter((q) => q.id !== action.payload),
+      };
     default:
       return state;
   }
