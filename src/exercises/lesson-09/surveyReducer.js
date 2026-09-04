@@ -64,6 +64,11 @@ export function surveyReducer(state, action) {
       };
 
     case 'ADD_OPTION_TO_QUESTION':
+      if (action.payload.optionText.trim() === '') {
+        return {
+          ...state,
+        };
+      }
       return {
         ...state,
         questions: state.questions.map((q) =>
@@ -80,7 +85,24 @@ export function surveyReducer(state, action) {
           q.id === action.payload.id
             ? {
                 ...q,
-                options: [action.payload.optionText],
+                options: q.options.map((opt, i) =>
+                  i === action.payload.index ? action.payload.optionText : opt
+                ),
+              }
+            : q
+        ),
+      };
+
+    case 'DELETE_OPTION_FROM_QUESTION':
+      return {
+        ...state,
+        questions: state.questions.map((q) =>
+          q.id === action.payload.id
+            ? {
+                ...q,
+                options: q.options.filter(
+                  (opt, i) => i !== action.payload.index
+                ),
               }
             : q
         ),
