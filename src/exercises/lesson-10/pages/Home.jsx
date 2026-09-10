@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export default function Home({ products }) {
   return (
@@ -35,9 +35,8 @@ export default function Home({ products }) {
                 borderRadius: 8,
               }}
             />
-
+            <Link to={`/products/${p.id}`}>{p.name}</Link>
             <h3 style={{ margin: '10px 0 4px' }}>{p.name}</h3>
-
             <p style={{ margin: 0 }}>
               <strong>${p.price.toFixed(2)}</strong>
             </p>
